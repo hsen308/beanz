@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BEANZ | Coffee House</title>
+    
+    <!-- Premium Fonts: Fredoka for playful headers, Nunito for clean reading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Smooth Loading Overlay -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-content">
+            <svg class="loader-doodle" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="var(--brand-blue)" d="M43.6,-70.6C54.7,-60.1,60.8,-43.3,66.9,-27.6C73,-11.9,79.1,2.8,76.5,16.5C73.9,30.2,62.6,42.8,50.1,52.3C37.6,61.8,23.9,68.2,9.3,71.2C-5.3,74.2,-20.8,73.8,-35.3,67.8C-49.8,61.8,-63.3,50.2,-72.1,35.6C-80.9,21,-85,3.4,-81,-12.3C-77,-28,-64.9,-41.8,-51.1,-51.6C-37.3,-61.4,-21.8,-67.2,-5,-61.2C11.8,-55.2,23.6,-37.4,32.4,-81.1L43.6,-70.6Z" transform="translate(100 100)" />
+            </svg>
+            <img src="logo.png" alt="BEANZ Logo" class="loader-logo">
+            <div class="loader-track"><div class="loader-bar"></div></div>
+        </div>
+    </div>
+
+    <!-- Main Wrapper for App-like structure -->
+    <div class="app-wrapper">
+        
+        <!-- Hero Section -->
+        <header class="hero">
+            <!-- Decorative SVG Squiggles (from original menu vibe) -->
+            <svg class="bg-doodle doodle-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,50 Q30,10 50,50 T90,50" fill="none" stroke="var(--brand-blue)" stroke-width="8" stroke-linecap="round"/>
+            </svg>
+            <svg class="bg-doodle doodle-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,20 Q30,90 50,20 T90,80" fill="none" stroke="var(--brand-highlight)" stroke-width="12" stroke-linecap="round"/>
+            </svg>
+
+            <div class="hero-content fade-in-up delay-1">
+                <div class="logo-container">
+                    <img src="logo.png" alt="BEANZ Logo" class="brand-logo">
+                </div>
+                <div class="brand-titles">
+                    <div class="pill-badge">Coffee House</div>
+                    <p class="sub-tagline">do what makes you happy <i class="fa-regular fa-face-smile"></i></p>
+                </div>
+                <!-- Call to Action -->
+                <a href="#menu-start" class="btn-primary custom-cursor-hover" id="view-menu-btn">
+                    <span>View Menu</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation - Premium Pill Style -->
+        <div class="nav-wrapper">
+            <nav class="category-nav" id="category-nav">
+                <ul class="nav-list">
+                    <li><a href="#coffee" class="nav-item active">Coffee</a></li>
+                    <li><a href="#hot-latte" class="nav-item">Hot latte</a></li>
+                    <li><a href="#tea" class="nav-item">Tea</a></li>
+                    <li><a href="#iced-latte" class="nav-item">Iced latte</a></li>
+                    <li><a href="#frappe" class="nav-item">Frappe</a></li>
+                    <li><a href="#milkshakes" class="nav-item">Milkshakes</a></li>
+                    <li><a href="#smoothies" class="nav-item">Smoothies</a></li>
+                    <li><a href="#food" class="nav-item">Food</a></li>
+                    <li><a href="#dessert" class="nav-item">Dessert</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content Matrix -->
+        <main class="main-content" id="menu-start">
+            
+            <div class="menu-grid-container">
+
+                <!-- Column 1: Core Coffee -->
+                <div class="menu-column">
+                    <section id="coffee" class="menu-section fade-in-up" data-section="coffee">
+                        <div class="section-header">
+                            <h2>Coffee:</h2>
+                            <div class="doodle-line"></div>
+                        </div>
+                        <div class="items-list">
+                            <article class="menu-item"><div class="item-inner"><h4>ESPRESSO</h4><span class="dots"></span><span class="price">150</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>DOUBLE ESPRESSO</h4><span class="dots"></span><span class="price">200</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>HOT AMERICANO</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>ICED AMERICANO</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>TURKISH COFFEE</h4><span class="dots"></span><span class="price">200</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>V60</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>FRENCH PRESS</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>FLAT WHITE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                        </div>
+                        
+                        <!-- Boxed Highlight Sub-category -->
+                        <div class="boxed-card highlight-card mt-md">
+                            <article class="menu-item"><div class="item-inner"><h4>AFFOGATO</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>PISTACHIO AFFOGATO</h4><span class="dots"></span><span class="price">450</span></div></article>
+                        </div>
+                    </section>
+                    
+                    <section id="hot-latte" class="menu-section fade-in-up" data-section="hot-latte">
+                        <div class="section-header">
+                            <h2>Hot latte:</h2>
+                        </div>
+                        <div class="items-list">
+                            <article class="menu-item"><div class="item-inner"><h4>CAPPUCCINO</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CAFE LATTE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CARAMEL MACCHIATO</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>VANILLA LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>MOCHA LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>WHITE MOCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>MATCHA LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>SPANISH LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>HOT CHOCOLATE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>TIRAMISU LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>RED VELVET LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>COOKIES LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>STRAWBERRY HOT CHOC.</h4><span class="dots"></span><span class="price">400</span></div></article>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Column 2: Sweet & Cold -->
+                <div class="menu-column">
+                    <section id="tea" class="menu-section fade-in-up" data-section="tea">
+                        <div class="boxed-card solid-card">
+                            <div class="section-header">
+                                <h2>Tea section:</h2>
+                            </div>
+                            <div class="items-list tight-list">
+                                <article class="menu-item"><div class="item-inner"><h4>HOT TEA SELECTION</h4><span class="dots"></span><span class="price">250</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICE TEA PEACH</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICE TEA BERRIES</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICE TEA PASSION</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICE TEA COLA</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="iced-latte" class="menu-section fade-in-up" data-section="iced-latte">
+                        <div class="boxed-card fancy-card top-rounded">
+                            <div class="section-header inside-box">
+                                <h2>Iced latte: <i class="fa-solid fa-heart doodle-icon"></i></h2>
+                            </div>
+                            <div class="items-list tight-list">
+                                <article class="menu-item"><div class="item-inner"><h4>MOCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>SALTED CARAMEL</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>WHITE MOCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CARAMEL</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>HAZELNUT</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>VANILLA</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>MATCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICED CHOCOLATE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>SPANISH</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ICED OREO LATTE</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="frappe" class="menu-section fade-in-up" data-section="frappe">
+                        <div class="section-header">
+                            <h2>Coffee frappe:</h2>
+                        </div>
+                        <div class="items-list">
+                            <article class="menu-item"><div class="item-inner"><h4>CARAMEL</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>TIRAMISU</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>MOCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>VANILLA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>BEANZ</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>WHITE MOCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>LOTUS</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>MATCHA</h4><span class="dots"></span><span class="price">400</span></div></article>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Column 3: Food & Rest -->
+                <div class="menu-column">
+                    <section id="milkshakes" class="menu-section fade-in-up" data-section="milkshakes">
+                        <div class="boxed-card solid-card">
+                            <div class="section-header">
+                                <h2>Milkshakes:</h2>
+                            </div>
+                            <div class="items-list tight-list">
+                                <article class="menu-item"><div class="item-inner"><h4>COOKIES</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>STRAWBERRY</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CHOCOLATE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>LOTUS</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>VANILLA</h4><span class="dots"></span><span class="price">350</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CHOC. HAZELNUT</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>RED VELVET</h4><span class="dots"></span><span class="price">400</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CARAMEL</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="smoothies" class="menu-section fade-in-up" data-section="smoothies">
+                        <div class="section-header">
+                            <h2>Smoothies:</h2>
+                        </div>
+                        <div class="items-list">
+                            <article class="menu-item"><div class="item-inner"><h4>MANGO</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>STRAWBERRY</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>PASSION FRUIT</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>BERRIES</h4><span class="dots"></span><span class="price">350</span></div></article>
+                        </div>
+                    </section>
+
+                    <section id="food" class="menu-section fade-in-up" data-section="food">
+                        <div class="section-header">
+                            <h2>Sandwiches: <svg class="inline-arrow" viewBox="0 0 50 30" width="30">
+                                <path d="M5,5 Q20,20 40,20 L35,10 M40,20 L35,30" fill="none" stroke="var(--brand-blue)" stroke-width="3" stroke-linecap="round"/>
+                            </svg></h2>
+                        </div>
+                        <div class="items-list mb-lg">
+                            <article class="menu-item"><div class="item-inner"><h4>TURKEY & CHEESE CLUB</h4><span class="dots"></span><span class="price">550</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>TURKEY & CHEESE</h4><span class="dots"></span><span class="price">550</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CHICKEN AVOCADO</h4><span class="dots"></span><span class="price">550</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>HALLOUM PESTO</h4><span class="dots"></span><span class="price">550</span></div></article>
+                        </div>
+
+                        <div class="boxed-card solid-card mt-md">
+                            <div class="section-header">
+                                <h2>Salad:</h2>
+                            </div>
+                            <div class="items-list tight-list">
+                                <article class="menu-item"><div class="item-inner"><h4>CEASER SALAD</h4><span class="dots"></span><span class="price">650</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>GREEK SALAD</h4><span class="dots"></span><span class="price">650</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>BEANZ SALAD</h4><span class="dots"></span><span class="price">650</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CRAB SALAD</h4><span class="dots"></span><span class="price">650</span></div></article>
+                            </div>
+                        </div>
+
+                        <div class="boxed-card solid-card mt-md mb-lg">
+                            <div class="section-header">
+                                <h2>Croissant:</h2>
+                            </div>
+                            <div class="items-list tight-list">
+                                <article class="menu-item"><div class="item-inner"><h4>CHEESE</h4><span class="dots"></span><span class="price">250</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>ZAATAR</h4><span class="dots"></span><span class="price">200</span></div></article>
+                                <article class="menu-item"><div class="item-inner"><h4>CHOCOLATE</h4><span class="dots"></span><span class="price">250</span></div></article>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="dessert" class="menu-section fade-in-up" data-section="dessert">
+                        <div class="section-header">
+                            <h2>Dessert:</h2>
+                        </div>
+                        <div class="items-list">
+                            <article class="menu-item"><div class="item-inner"><h4>FONDANT</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>BROWNIE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CHEESECAKE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CHOCOLATE CAKE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>LAZY CAKE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>CHOCOLATE MUFFIN</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>DATES CUSTARD MUFFIN</h4><span class="dots"></span><span class="price">400</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>LOTUS CHEESECAKE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>TIRAMISU</h4><span class="dots"></span><span class="price">350</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>COOKIES</h4><span class="dots"></span><span class="price">200</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>SPECIAL COOKIES</h4><span class="dots"></span><span class="price">250</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>PANCAKES</h4><span class="dots"></span><span class="price">500</span></div></article>
+                            <article class="menu-item"><div class="item-inner"><h4>DATE CAKE</h4><span class="dots"></span><span class="price">350</span></div></article>
+                        </div>
+                    </section>
+                </div>
+
+            </div> <!-- End Grid Matrix -->
+            
+            <!-- Bottom Graphic Element -->
+            <div class="bottom-graphic fade-in-up">
+                <div class="qr-placeholder">
+                    <span>Scan for updates!</span>
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <div class="doodle-person">
+                    <img src="https://api.dicebear.com/7.x/open-peeps/svg?seed=Felix&clothing=sweater" alt="Mascot Doodle" width="120">
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content fade-in-up target-anim">
+                <div class="bon-appetit">
+                    <h2>BON<br>APP<br>ETIT</h2>
+                    <p>LET's EAT!</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <img src="logo.png" alt="BEANZ Logo" class="footer-logo">
+            </div>
+            
+            <div class="footer-bar">
+                <p>Designed for mobile scanning <i class="fa-solid fa-bolt"></i></p>
+            </div>
+        </footer>
+        
+    </div> <!-- End App Wrapper -->
+
+    <!-- Premium Floating Action Button -->
+    <button class="fab-menu" id="fab-btn" aria-label="Menu list menu button">
+        <i class="fas fa-list-ul"></i>
+    </button>
+    
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
