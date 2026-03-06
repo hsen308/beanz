@@ -1,9 +1,9 @@
 :root {
     /* Color Palette - Fresh Blue & White Theme */
-    --bg-primary: #FDFBF7; /* Warm off-white */
+    --bg-primary: #FDFBF7;
     --bg-secondary: #FFFFFF;
     
-    --brand-blue: #234FB5; /* A slightly more vibrant, modern Royal Blue */
+    --brand-blue: #234FB5;
     --brand-blue-dark: #1A3C8B;
     --brand-highlight: rgba(35, 79, 181, 0.08); 
     --brand-highlight-strong: rgba(35, 79, 181, 0.15);
@@ -13,23 +13,25 @@
     
     --border-color: var(--brand-blue); 
     
-    /* Typography */
     --font-heading: 'Fredoka', sans-serif;
     --font-body: 'Nunito', sans-serif;
     
-    /* Spacing & Sizes */
     --nav-height: 70px;
     --radius-sm: 12px;
     --radius-md: 20px;
     --radius-lg: 32px;
     --radius-pill: 100px;
     
-    /* Premium easing */
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-    --transition: all 0.4s var(--ease-smooth);
+
+    /* FIX: Only transition GPU-composited properties (transform + opacity).
+       Removed box-shadow, background-color, color, border-color — these
+       force repaints on every frame and are the main source of scroll lag. */
+    --transition-transform: transform 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth);
+    /* Separate, slower transition for color changes — only used where needed */
+    --transition-color: background-color 0.25s ease, color 0.25s ease;
     
-    /* Sophisticated Shadows */
     --shadow-soft: 0 8px 24px rgba(35, 79, 181, 0.06);
     --shadow-float: 0 16px 40px rgba(35, 79, 181, 0.12);
     --shadow-inner: inset 0 2px 4px rgba(35, 79, 181, 0.04);
@@ -48,24 +50,15 @@
     color: white;
 }
 
-/* Custom minimal scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg-primary); 
-}
-::-webkit-scrollbar-thumb {
-    background: var(--brand-highlight-strong); 
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-blue); 
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--brand-highlight-strong); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-blue); }
 
 html {
-    scroll-behavior: smooth;
+    /* FIX: Removed `scroll-behavior: smooth` — it conflicts with JS smooth
+       scroll calls and can cause both to fight, producing stutters. JS
+       handles all smooth scrolling exclusively now. */
     scroll-padding-top: calc(var(--nav-height) + 40px);
 }
 
@@ -76,8 +69,6 @@ body {
     font-weight: 700;
     line-height: 1.5;
     overflow-x: hidden;
-    /* subtle paper texture overlay */
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z' fill='%231a3c8b' fill-opacity='0.01' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 h1, h2, h3, h4 {
@@ -89,16 +80,13 @@ h1, h2, h3, h4 {
     letter-spacing: 0.5px;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+a { text-decoration: none; color: inherit; }
 
 .mt-md { margin-top: 1.5rem; }
 .mt-lg { margin-top: 2.5rem; }
 .mb-lg { margin-bottom: 2.5rem; }
 
-/* Loader - App Style */
+/* Loader */
 .loader-overlay {
     position: fixed;
     inset: 0;
@@ -107,13 +95,17 @@ a {
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    /* FIX: Only transition opacity + visibility. Removed transform: scale()
+       from the hidden state — that kept the element on its own compositing
+       layer permanently, eating GPU memory even after load. */
     transition: opacity 0.6s var(--ease-smooth), visibility 0.6s;
 }
 
 .loader-overlay.hidden {
     opacity: 0;
     visibility: hidden;
-    transform: scale(1.05); /* subtle zoom out when hiding */
+    pointer-events: none;
+    /* FIX: No transform here. The scale(1.05) was creating a stale layer. */
 }
 
 .loader-content {
@@ -128,6 +120,8 @@ a {
     width: 180px;
     z-index: 2;
     animation: float 3s ease-in-out infinite;
+    /* will-change is appropriate here since this animates continuously */
+    will-change: transform;
 }
 
 .loader-doodle {
@@ -137,6 +131,7 @@ a {
     opacity: 0.05;
     z-index: 1;
     animation: spin 20s linear infinite;
+    will-change: transform;
 }
 
 .loader-track {
@@ -150,13 +145,13 @@ a {
 
 .loader-bar {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     height: 100%;
     width: 0%;
     background: var(--brand-blue);
     border-radius: var(--radius-pill);
     animation: fillBar 1.5s var(--ease-smooth) forwards;
+    will-change: width;
 }
 
 @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -169,7 +164,6 @@ a {
     margin: 0 auto;
     position: relative;
     background: var(--bg-primary);
-    box-shadow: 0 0 50px rgba(0,0,0,0.02);
     min-height: 100vh;
 }
 
@@ -184,12 +178,16 @@ a {
     text-align: center;
     overflow: hidden;
     min-height: 60vh;
+    /* FIX: contain prevents the hero from affecting layout/paint of
+       elements below it during scroll. */
+    contain: layout style;
 }
 
 .bg-doodle {
     position: absolute;
     opacity: 0.15;
     z-index: 0;
+    /* Static elements, no will-change needed */
 }
 
 .doodle-1 { width: 150px; top: 10%; left: -5%; transform: rotate(15deg); }
@@ -211,12 +209,13 @@ a {
     box-shadow: var(--shadow-float);
     border: 3px solid var(--brand-highlight-strong);
     transform: rotate(-2deg);
-    transition: var(--transition);
+    /* FIX: Only animate transform — no box-shadow in transition */
+    transition: transform 0.3s var(--ease-smooth);
+    will-change: transform;
 }
 
 .logo-container:hover {
     transform: rotate(0deg) scale(1.02);
-    box-shadow: 0 20px 50px rgba(35, 79, 181, 0.15);
 }
 
 .brand-logo {
@@ -263,12 +262,14 @@ a {
     font-family: var(--font-heading);
     letter-spacing: 1px;
     text-transform: uppercase;
-    transition: var(--transition);
+    /* FIX: Transform-only transition */
+    transition: transform 0.3s var(--ease-smooth), var(--transition-color);
     box-shadow: 0 10px 25px rgba(35, 79, 181, 0.3);
     border: 2px solid var(--brand-blue);
     margin-top: 1rem;
     position: relative;
     overflow: hidden;
+    will-change: transform;
 }
 
 .btn-primary::before {
@@ -277,46 +278,51 @@ a {
     top: 0; left: -100%; width: 50%; height: 100%;
     background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
     transform: skewX(-20deg);
-    transition: 0.5s;
+    transition: transform 0.5s ease;
+    will-change: transform;
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(35, 79, 181, 0.4);
     background-color: var(--brand-blue-dark);
 }
 
 .btn-primary:hover::before {
-    left: 150%;
+    /* FIX: Use transform instead of `left` property change — avoids layout recalc */
+    transform: skewX(-20deg) translateX(500%);
 }
 
 .btn-primary:active {
     transform: translateY(1px);
 }
 
-/* Sophisticated Nav Bar (Frosted Pill) */
+/* Sticky Nav Bar */
 .nav-wrapper {
     position: sticky;
     top: 15px;
     z-index: 100;
     padding: 0 1rem;
     margin-bottom: 2rem;
-    pointer-events: none; /* Let clicks pass through padding */
+    pointer-events: none;
 }
 
 .category-nav {
-    pointer-events: auto; /* Re-enable clicks for the actual nav */
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    pointer-events: auto;
+    background: rgba(253, 251, 247, 0.98);
     border: 2px solid var(--brand-highlight-strong);
     border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-float);
+    box-shadow: var(--shadow-soft);
     width: 100%;
     margin: 0 auto;
     overflow-x: auto;
     scrollbar-width: none;
+    /* FIX: Promotes nav to its own compositing layer so it never
+       triggers repaints of the content beneath it during scroll. */
+    transform: translateZ(0);
+    will-change: transform;
 }
+
+.category-nav::-webkit-scrollbar { display: none; }
 
 .nav-list {
     display: flex;
@@ -324,6 +330,7 @@ a {
     padding: 6px;
     margin: 0;
     min-width: max-content;
+    list-style: none;
 }
 
 .nav-item {
@@ -334,7 +341,8 @@ a {
     font-size: 0.95rem;
     font-weight: 600;
     border-radius: var(--radius-pill);
-    transition: var(--transition);
+    /* FIX: Only transition transform + colors, never box-shadow */
+    transition: transform 0.2s ease, var(--transition-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -347,10 +355,9 @@ a {
 .nav-item.active {
     color: #fff;
     background: var(--brand-blue);
-    box-shadow: 0 4px 12px rgba(35, 79, 181, 0.3);
 }
 
-/* Main Content Grid Matrix */
+/* Main Content Grid */
 .main-content {
     padding: 0 1.5rem 6rem;
 }
@@ -363,7 +370,6 @@ a {
     margin: 0 auto;
 }
 
-/* Breakpoints for Advanced Matrix (Senior Dev Vibe) */
 @media (min-width: 800px) {
     .menu-grid-container {
         max-width: 100%;
@@ -381,6 +387,10 @@ a {
 .menu-section {
     scroll-margin-top: calc(var(--nav-height) + 60px);
     margin-bottom: 3rem;
+    /* FIX: `contain: layout style` tells the browser this section's
+       internals don't affect outside layout, so it can skip repainting
+       the rest of the page when these animate in. */
+    contain: layout style;
 }
 
 .section-header {
@@ -398,10 +408,9 @@ a {
 
 .doodle-line {
     flex-grow: 1;
-    height: 4px;
-    background-image: repeating-linear-gradient(to right, var(--brand-blue) 0, var(--brand-blue) 10px, transparent 10px, transparent 20px);
+    border-bottom: 4px dashed var(--brand-blue);
     opacity: 0.3;
-    border-radius: 2px;
+    margin-left: 15px;
 }
 
 .doodle-icon {
@@ -410,28 +419,24 @@ a {
     margin-left: 5px;
 }
 
-.inline-arrow {
-    vertical-align: middle;
-    margin-left: 10px;
-}
+.inline-arrow { vertical-align: middle; margin-left: 10px; }
 
-/* Premium Lists and Boxed Cards */
 .items-list {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.tight-list {
-    gap: 0.6rem;
-}
+.tight-list { gap: 0.6rem; }
 
-/* The magic dots leader line for items */
 .menu-item {
     position: relative;
     padding: 4px 0;
+    /* FIX: Promote each item to its own layer ahead of hover so the
+       transform doesn't cause a layer promotion mid-interaction (jank). */
     transition: transform 0.2s var(--ease-spring);
     cursor: default;
+    will-change: transform;
 }
 
 .menu-item:hover {
@@ -453,17 +458,22 @@ a {
     margin: 0;
     white-space: nowrap;
     padding-right: 10px;
-    background: var(--bg-primary); /* mask dots */
+    background: var(--bg-primary);
+    position: relative;
     z-index: 1;
 }
 
-/* Creates the restaurant-style dotted line */
+/* Dotted leader line — CSS background trick, no layout impact */
 .dots {
     flex-grow: 1;
-    border-bottom: 2px dotted var(--brand-highlight-strong);
+    background-image: linear-gradient(to right, var(--brand-highlight-strong) 40%, transparent 20%);
+    background-position: bottom;
+    background-size: 8px 3px;
+    background-repeat: repeat-x;
+    height: 3px;
     position: relative;
-    top: -6px;
-    margin: 0 5px;
+    top: -8px;
+    margin: 0 10px;
     z-index: 0;
 }
 
@@ -473,11 +483,12 @@ a {
     font-weight: 900;
     font-size: 1.15rem;
     padding-left: 10px;
-    background: var(--bg-primary); /* mask dots */
+    background: var(--bg-primary);
+    position: relative;
     z-index: 1;
 }
 
-/* Special Boxed Layouts */
+/* Boxed Cards */
 .boxed-card {
     border: 3px solid var(--brand-blue);
     border-radius: var(--radius-lg);
@@ -486,25 +497,27 @@ a {
     box-shadow: var(--shadow-soft);
     position: relative;
     overflow: hidden;
-    transition: var(--transition);
+    /* FIX: Transform-only transition — no box-shadow transition */
+    transition: transform 0.3s var(--ease-spring);
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-/* Masking adjustments for items inside white boxes */
 .boxed-card .item-inner h4, 
 .boxed-card .price {
     background: var(--bg-secondary);
 }
 
 .boxed-card:hover {
-    box-shadow: var(--shadow-float);
-    transform: translateY(-5px);
+    /* FIX: Removed box-shadow change on hover — box-shadow forces full
+       repaint. The transform alone gives a satisfying lift effect. */
+    transform: translateY(-5px) translateZ(0);
 }
 
 .boxed-card.top-rounded {
     border-radius: 40px 40px var(--radius-lg) var(--radius-lg);
 }
 
-/* The highlight box */
 .highlight-card {
     border-style: dashed;
     border-width: 3px;
@@ -513,7 +526,6 @@ a {
 .highlight-card .item-inner h4, 
 .highlight-card .price { background: transparent; }
 
-/* The solid color box */
 .solid-card {
     background-color: var(--brand-blue);
     color: white;
@@ -521,9 +533,8 @@ a {
 .solid-card .section-header h2 { color: white; }
 .solid-card .item-inner h4 { color: white; background: var(--brand-blue); }
 .solid-card .price { color: white; background: var(--brand-blue); }
-.solid-card .dots { border-bottom-color: rgba(255,255,255,0.3); }
+.solid-card .dots { background-image: linear-gradient(to right, rgba(255,255,255,0.4) 40%, transparent 20%); }
 
-/* The fancy card with SVG decoration */
 .fancy-card::after {
     content: '';
     position: absolute;
@@ -536,7 +547,7 @@ a {
     border-radius: 32px 32px calc(var(--radius-lg) - 8px) calc(var(--radius-lg) - 8px);
 }
 
-/* Graphic bottom section */
+/* Bottom graphic */
 .bottom-graphic {
     display: flex;
     justify-content: center;
@@ -559,7 +570,7 @@ a {
 }
 .qr-placeholder i { font-size: 3rem; }
 
-/* Premium Footer */
+/* Footer */
 .site-footer {
     position: relative;
     background-color: var(--bg-secondary);
@@ -580,9 +591,7 @@ a {
     padding: 4rem 2rem;
 }
 
-.bon-appetit {
-    text-align: left;
-}
+.bon-appetit { text-align: left; }
 
 .bon-appetit h2 {
     font-size: 3.5rem;
@@ -599,10 +608,7 @@ a {
     letter-spacing: 1px;
 }
 
-.social-links {
-    display: flex;
-    gap: 1.2rem;
-}
+.social-links { display: flex; gap: 1.2rem; }
 
 .social-links a {
     display: flex;
@@ -615,7 +621,9 @@ a {
     color: var(--brand-blue);
     border: 2px solid var(--brand-highlight-strong);
     font-size: 1.5rem;
-    transition: var(--transition);
+    /* FIX: Transform-only transition on social links */
+    transition: transform 0.25s var(--ease-spring), var(--transition-color);
+    will-change: transform;
 }
 
 .social-links a:hover {
@@ -623,13 +631,9 @@ a {
     color: white;
     transform: translateY(-5px) rotate(10deg);
     border-color: var(--brand-blue);
-    box-shadow: 0 10px 20px rgba(35, 79, 181, 0.2);
 }
 
-.footer-logo {
-    width: 150px;
-    opacity: 0.8;
-}
+.footer-logo { width: 150px; opacity: 0.8; }
 
 .footer-bar {
     background: var(--brand-blue);
@@ -641,7 +645,7 @@ a {
     text-transform: uppercase;
 }
 
-/* Floating Action Button (Premium App style) */
+/* Floating Action Button */
 .fab-menu {
     position: fixed;
     bottom: 30px;
@@ -659,7 +663,9 @@ a {
     font-size: 1.6rem;
     z-index: 110;
     cursor: pointer;
-    transition: var(--transition);
+    /* FIX: Transform + opacity only */
+    transition: transform 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth);
+    will-change: transform, opacity;
 }
 
 .fab-menu:hover {
@@ -667,20 +673,24 @@ a {
     background-color: var(--brand-blue-dark);
 }
 
-.fab-menu:active {
-    transform: scale(0.95);
-}
+.fab-menu:active { transform: scale(0.95); }
 
-/* Advanced Entrance Animations */
+/* Entrance Animations */
 .fade-in-up {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.7s var(--ease-spring), transform 0.7s var(--ease-spring);
+    /* FIX: Declare will-change upfront — prevents mid-animation layer 
+       promotion which causes a single-frame flash/jank */
+    will-change: opacity, transform;
 }
 
 .fade-in-up.visible {
     opacity: 1;
-    transform: translateY(0);
+    /* FIX: translateZ(0) ensures it stays on the GPU layer */
+    transform: translateY(0) translateZ(0);
+    /* FIX: Remove will-change after animation completes to free GPU memory */
+    will-change: auto;
 }
 
 .delay-1 { transition-delay: 0.1s; }
